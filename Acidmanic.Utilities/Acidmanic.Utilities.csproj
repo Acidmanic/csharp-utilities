@@ -1,7 +1,39 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+
+    <PropertyGroup>
+        <!-- NuGet -->
+        <Id>Acidmanic.Utilities</Id>
+        <PackageId>Acidmanic.Utilities</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Mani Moayedi</Authors>
+        <Company>Acidmanic</Company>
+        <!--        <PackageIcon>Graphics/MeadowIcon.png</PackageIcon>-->
+        <Description>Commonly usable basic classes and types</Description>
+        <Summary>Commonly usable basic classes and types</Summary>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <RepositoryUrl>https://github.com/Acidmanic/csharp-utilities</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/Acidmanic/csharp-utilities</PackageProjectUrl>
+        <Title>Acidmanic Dotnet Core Utilities</Title>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!--        <None Include="../Graphics/MeadowIcon.png">-->
+        <!--            <Pack>true</Pack>-->
+        <!--            <PackagePath>Graphics/MeadowIcon.png</PackagePath>-->
+        <!--            <CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
+        <!--        </None>-->
+        <None Include="../LICENSE.txt">
+            <Pack>true</Pack>
+            <PackagePath>LICENSE.txt</PackagePath>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
 </Project>
