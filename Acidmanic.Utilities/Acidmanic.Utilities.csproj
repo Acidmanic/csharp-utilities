@@ -12,7 +12,7 @@
         <Version>1.0.0</Version>
         <Authors>Mani Moayedi</Authors>
         <Company>Acidmanic</Company>
-        <!--        <PackageIcon>Graphics/MeadowIcon.png</PackageIcon>-->
+        <PackageIcon>Graphics/icon.png</PackageIcon>
         <Description>Commonly usable basic classes and types</Description>
         <Summary>Commonly usable basic classes and types</Summary>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -24,11 +24,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!--        <None Include="../Graphics/MeadowIcon.png">-->
-        <!--            <Pack>true</Pack>-->
-        <!--            <PackagePath>Graphics/MeadowIcon.png</PackagePath>-->
-        <!--            <CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
-        <!--        </None>-->
+        <None Include="../Graphics/icon.png">
+            <Pack>true</Pack>
+            <PackagePath>Graphics/icon.png</PackagePath>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Include="../LICENSE.txt">
             <Pack>true</Pack>
             <PackagePath>LICENSE.txt</PackagePath>
