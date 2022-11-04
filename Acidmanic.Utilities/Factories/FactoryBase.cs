@@ -5,9 +5,8 @@ using Acidmanic.Utilities.Results;
 
 namespace Acidmanic.Utilities.Factories
 {
-    public abstract class FactoryBase<TProduct,TArgument>
+    public abstract class FactoryBase<TProduct, TArgument>
     {
-
         private readonly Func<Type, object> _resolver;
         private readonly FactoryMatching _matching;
         private readonly List<Type> _implementationTypes;
@@ -17,14 +16,18 @@ namespace Acidmanic.Utilities.Factories
             _resolver = resolver;
             _matching = matching;
             _implementationTypes = new List<Type>();
-            
+
             ScanAssembly(Assembly.GetCallingAssembly());
         }
 
-        public FactoryBase(FactoryMatching matching):this(type => null, matching) { }
+        public FactoryBase(FactoryMatching matching) : this(type => null, matching)
+        {
+        }
 
-        public FactoryBase():this(type => null,FactoryMatching.MatchByInstance) { }
-        
+        public FactoryBase() : this(type => null, FactoryMatching.MatchByInstance)
+        {
+        }
+
 
         public void ScanAssembly(Assembly assembly)
         {
@@ -33,7 +36,7 @@ namespace Acidmanic.Utilities.Factories
                 var types = assembly.GetTypes();
 
                 var productType = typeof(TProduct);
-                
+
                 foreach (var type in types)
                 {
                     if (type.IsAssignableFrom(productType))
@@ -45,12 +48,12 @@ namespace Acidmanic.Utilities.Factories
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                
+                // ignored
             }
         }
-        
+
         public TProduct Make(TArgument value)
         {
             foreach (var type in _implementationTypes)
@@ -70,7 +73,7 @@ namespace Acidmanic.Utilities.Factories
         protected Result<TProduct> Matches(Type type, TArgument argument)
         {
             bool matched = false;
-            
+
             if (_matching == FactoryMatching.MatchByType)
             {
                 matched = MatchesByType(type, argument);
@@ -87,7 +90,7 @@ namespace Acidmanic.Utilities.Factories
             {
                 return new Result<TProduct>().FailAndDefaultValue();
             }
-            
+
             if (_matching == FactoryMatching.MatchByInstance)
             {
                 matched = MatchesByInstance(instance, argument);
@@ -105,6 +108,7 @@ namespace Acidmanic.Utilities.Factories
         {
             return default;
         }
+
         protected virtual TProduct Instantiate(Type type)
         {
             var instance = TryResolve(type) ?? TryInstantiateByConstructor(type);
@@ -127,9 +131,9 @@ namespace Acidmanic.Utilities.Factories
                 {
                     return constructor.Invoke(new object[] { });
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    
+                    // ignored
                 }
             }
 
@@ -142,8 +146,10 @@ namespace Acidmanic.Utilities.Factories
             {
                 return _resolver(type);
             }
-            catch (Exception e)
-            { }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             return null;
         }
