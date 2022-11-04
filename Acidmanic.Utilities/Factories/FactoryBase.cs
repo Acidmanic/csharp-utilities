@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Acidmanic.Utilities.Results;
 
@@ -41,7 +42,7 @@ namespace Acidmanic.Utilities.Factories
                 {
                     if (productType.IsAssignableFrom(type))
                     {
-                        if (!type.IsAbstract && !type.IsInterface)
+                        if (!type.IsAbstract && !type.IsInterface && !IsNullObject(type))
                         {
                             _implementationTypes.Add(type);
                         }
@@ -54,6 +55,14 @@ namespace Acidmanic.Utilities.Factories
             }
         }
 
+        private bool IsNullObject(Type type)
+        {
+            var attributes = type.GetCustomAttributes<NullObjectAttribute>(true)
+                .FirstOrDefault();
+
+            return attributes != null;
+        }
+        
         public TProduct Make(TArgument value)
         {
             foreach (var type in _implementationTypes)

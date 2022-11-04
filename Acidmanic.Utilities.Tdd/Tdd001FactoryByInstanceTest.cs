@@ -38,6 +38,13 @@ namespace Acidmanic.Utilities.Tdd
         {
             protected override string Brand => "CanOne";
         }
+        
+        
+        [NullObject]
+        private class NullProduct : ProductBase
+        {
+            protected override string Brand => "null";
+        }
 
 
         private class ProductFactory : FactoryBase<ProductBase, string>
@@ -57,13 +64,18 @@ namespace Acidmanic.Utilities.Tdd
             {
                 return product.Supports(value);
             }
+
+            protected override ProductBase DefaultValue()
+            {
+                return new NullProduct();
+            }
         }
 
         public override void Main()
         {
 
 
-            string[] brandNames = { "friends","g-shark","canone"};
+            string[] brandNames = { "friends","g-shark","canone","sheykh"};
 
             var factory = new ProductFactory();
 
