@@ -17,7 +17,7 @@ namespace Acidmanic.Utilities.Factories
             _matching = matching;
             _implementationTypes = new List<Type>();
 
-            ScanAssembly(Assembly.GetCallingAssembly());
+            ScanAssembly(this.GetType().Assembly);
         }
 
         public FactoryBase(FactoryMatching matching) : this(type => null, matching)
@@ -39,7 +39,7 @@ namespace Acidmanic.Utilities.Factories
 
                 foreach (var type in types)
                 {
-                    if (type.IsAssignableFrom(productType))
+                    if (productType.IsAssignableFrom(type))
                     {
                         if (!type.IsAbstract && !type.IsInterface)
                         {
