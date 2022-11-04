@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documenta
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.Utilities.Tdd", "Acidmanic.Utilities.Tdd\Acidmanic.Utilities.Tdd.csproj", "{322E64EB-8CF5-4956-8547-9FAED23EA591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,17 @@ Global
 		{E204CE50-8B6F-4B54-B9E4-D16F2CE4AA95}.Release|x64.Build.0 = Release|Any CPU
 		{E204CE50-8B6F-4B54-B9E4-D16F2CE4AA95}.Release|x86.ActiveCfg = Release|Any CPU
 		{E204CE50-8B6F-4B54-B9E4-D16F2CE4AA95}.Release|x86.Build.0 = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|x64.Build.0 = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Debug|x86.Build.0 = Debug|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|Any CPU.Build.0 = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|x64.ActiveCfg = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|x64.Build.0 = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|x86.ActiveCfg = Release|Any CPU
+		{322E64EB-8CF5-4956-8547-9FAED23EA591}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
