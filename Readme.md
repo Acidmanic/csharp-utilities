@@ -68,7 +68,7 @@ By default, the factory, when instantiated, scans the assembly containing your f
 If your implementations are in any other assembly, you can just call the method 
 ```ScanAssembly``` passing that assembly to it.
 
-__What There is no valid implementation for given Argument?_
+__What There is no valid implementation for given Argument?__
 
 Usually the best practice would be to use a __NULL Implementation__ for such situations.
  FactoryBase would return null if it does not find any implementation. But you can change 
