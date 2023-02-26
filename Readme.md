@@ -80,6 +80,67 @@ to Prevent the FactoryBase to use it as a valid implementation, simply just Use
 ```NullObject``` attribute on your implementation.
 
 
+Naming Conventions
+------------------
+
+The class ```NamingConvention``` allows to parse and convert an string from  
+one convention into another. For standard conventions, it can automatically 
+detect the source convention. You can also define and use your own conventions 
+by simply providing a new instance of ConventionDescriptor object.
+
+__```NamingConvention``` class's methods:__
+
+
+ * ```Result<ProcessedName> Parse(string name)```
+   * This method trys to identify the naming convention that the given name is confirming with,
+   by searching across the builtin standard conventions.
+   * Returns a successful result of ```ProcessedName``` object containing the detected convention's 
+   descriptor and segmented values of the name, if be able to find one. otherwise returns a failure result.
+*  ```Render(string[] segments, ConventionDescriptor convention)``` and ```Render(ProcessedName processedName)``` 
+   * Takes a separated segments of a name and the target convention's descriptor, directly or via a 
+   ProcessedName object, and assembles the segments together to create a name confirming with target convention.
+* ```string Convert(string name, ConventionDescriptor convention)```
+   * Takes a source name and target convention. Trys to detect the source name's convention and if found one, 
+  then will convert given name to target convention.
+
+__Standard Builtin Conventions:__
+
+ You can find predefined standard conventions in ```ConventionDescriptor.Standard``` class.
+ it also provides all standard conventions as an array in ```StandardConventions``` property.
+
+The following code shows an example use-case for naming convention classes:
+
+```c#
+var names = new[]
+{
+    "ahmad-mahmud-kababi", "FAT_SNAKE", "_internalShit",
+    "lame_snake", "MrPascal", "stupidCamel"
+};
+
+var namingConvention = new NamingConvention();
+
+
+
+foreach (var name in names)
+{
+    var parsed = namingConvention.Parse(name);
+
+    Console.WriteLine("--------------------------");
+
+    if (parsed)
+    {
+        Console.WriteLine("Parsed " + name + ", Detected: " + parsed.Value.Convention.Name);
+
+        Console.WriteLine("-----------");
+
+        foreach (var convention in ConventionDescriptor.Standard.StandardConventions)
+        {
+            Console.WriteLine(convention.Name + ": " +
+                              namingConvention.Render(parsed.Value.Segments, convention));
+        }
+    }
+}
+```
 
 
 
