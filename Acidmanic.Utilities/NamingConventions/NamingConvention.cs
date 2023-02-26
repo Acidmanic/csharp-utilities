@@ -252,7 +252,7 @@ namespace Acidmanic.Utilities.NamingConventions
                 
                 if (parsed)
                 {
-                    var converted = Render(parsed.Value.Segments, convention);
+                    name = Render(parsed.Value.Segments, convention);
                 }
 
                 return name;
