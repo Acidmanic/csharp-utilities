@@ -6,7 +6,7 @@ namespace Acidmanic.Utilities.Tdd
     {
         static void Main(string[] args)
         {
-            new Tdd001FactoryByInstanceTest().Main();
+            new Tdd002NamingConventionTest().Main();
         }
     }
 }
