@@ -244,5 +244,18 @@ namespace Acidmanic.Utilities.NamingConventions
 
                 return "";
             }
+
+
+            public string Convert(string name, ConventionDescriptor convention)
+            {
+                var parsed = Parse(name);
+                
+                if (parsed)
+                {
+                    var converted = Render(parsed.Value.Segments, convention);
+                }
+
+                return name;
+            }
     }
 }

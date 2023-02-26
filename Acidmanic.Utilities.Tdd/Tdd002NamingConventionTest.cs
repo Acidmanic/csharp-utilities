@@ -10,11 +10,6 @@ namespace Acidmanic.Utilities.Tdd
 
         public override void Main()
         {
-
-            var testCase = "_internalShit";
-
-            var testResult = new NamingConvention().Parse(testCase); 
-            
             
             var names = new[]
             {
@@ -24,6 +19,8 @@ namespace Acidmanic.Utilities.Tdd
 
             var namingConvention = new NamingConvention();
 
+            
+            
             foreach (var name in names)
             {
                 var parsed = namingConvention.Parse(name);
