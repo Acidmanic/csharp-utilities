@@ -143,4 +143,12 @@ foreach (var name in names)
 ```
 
 
+Compressions
+------------
+
+There are two small methods that simply just wrap up System.IO.Compression tools in two 
+extension methods: ```string.CompressAsync(string,Compression,[CompressionLevel])``` and
+```string.DeCompressAsync(string,Compression)```. The Compress method, takes and string 
+and returns the compressed data as base64 string. And the DeCompress method does exactly 
+the opposite.
 

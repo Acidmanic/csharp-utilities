@@ -1,5 +1,4 @@
 using System;
-using Acidmanic.Utilities.NamingConventions;
 
 namespace Acidmanic.Utilities.Tdd
 {
