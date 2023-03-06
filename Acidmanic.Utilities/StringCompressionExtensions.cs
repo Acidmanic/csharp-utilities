@@ -58,12 +58,32 @@ namespace Acidmanic.Utilities
             await using var output = new MemoryStream();
             await using var stream = createDecompressionStream(input);
 
-            await stream.CopyToAsync(output);
+            var keepReading = true;
+
+            const int bufferLength = 1024;
+            byte[] buffer = new byte[bufferLength];
+            
+            while (keepReading)
+            {
+                int read = await input.ReadAsync(buffer, 0, bufferLength);
+
+                await output.WriteAsync(buffer);
+
+                keepReading = read == bufferLength;
+            }
+            
             await output.FlushAsync();
 
             return Encoding.Unicode.GetString(output.ToArray());
         }
 
+        /// <summary>
+        /// Based of selected Compression type, compresses the input string and returns a base64 string in result.
+        /// </summary>
+        /// <param name="value">string to be compressed</param>
+        /// <param name="compression">Specifies the compression algorithm or if the string must be compressed at all.</param>
+        /// <param name="level">Compression level (Vs Performance)</param>
+        /// <returns>Compressed string data in base64 format.</returns>
         public static Task<string> CompressAsync(this string value, Compressions compression,
             CompressionLevel level = CompressionLevel.Fastest)
         {
@@ -74,9 +94,15 @@ namespace Acidmanic.Utilities
 
             return Task.FromResult(value);
         }
-
-
-        private static Task<string> DecompressAsync(this string value, Compressions compression)
+        
+        /// <summary>
+        /// Takes a base64 string format as input data which is considered to be the result of a compression on a
+        /// string data. Returns the de compressed result as string. 
+        /// </summary>
+        /// <param name="value">base64 string representing the compressed data</param>
+        /// <param name="compression">Specifies the compression algorithm or if the string is compressed at all.</param>
+        /// <returns>DeCompressed string data as string.</returns>
+        public static Task<string> DecompressAsync(this string value, Compressions compression)
         {
             if (compression == Compressions.Brotli)
             {
