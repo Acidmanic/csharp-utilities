@@ -34,13 +34,17 @@
             <PackagePath>LICENSE.txt</PackagePath>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <Content Include="..\Readme.md" >
+        <Content Include="..\Readme.md">
             <Pack>true</Pack>
             <PackagePath>/</PackagePath>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <CopyToPublishDirectory>Always</CopyToPublishDirectory>
             <Link>Readme.md</Link>
         </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Acidmanic.Utilities.Reflections" Version="1.0.6-b06" />
     </ItemGroup>
 
 </Project>
