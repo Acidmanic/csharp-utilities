@@ -152,7 +152,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilter(data, filter,filter.Hash());
             
             Assert.Equal(2,result.Count);
             
@@ -170,7 +170,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(4,result.Count);
             
@@ -185,7 +185,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -203,7 +203,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -221,7 +221,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(1,result.Count);
             
@@ -238,7 +238,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -257,7 +257,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -276,7 +276,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(3,result.Count);
             
@@ -297,7 +297,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(3,result.Count);
             
@@ -318,7 +318,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(1,result.Count);
             
@@ -335,7 +335,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel>();
 
-            var result = sut.PerformFilter(data, filter);
+            var result = sut.PerformFilterByHash(data, filter);
             
             Assert.Equal(2,result.Count);
             

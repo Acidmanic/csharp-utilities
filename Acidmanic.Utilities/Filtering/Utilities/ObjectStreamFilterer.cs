@@ -11,7 +11,13 @@ namespace Acidmanic.Utilities.Filtering.Utilities
     {
         private readonly AccessNode _idLeaf = TypeIdentity.FindIdentityLeaf<TStorage>();
 
-        public List<FilterResult> PerformFilter(IEnumerable<TStorage> data, FilterQuery filterQuery)
+
+        public List<FilterResult> PerformFilterByHash(IEnumerable<TStorage> data, FilterQuery filterQuery)
+        {
+            return PerformFilter(data, filterQuery, filterQuery.Hash());
+        }
+
+        public List<FilterResult> PerformFilter(IEnumerable<TStorage> data, FilterQuery filterQuery, string searchId)
         {
             var filterResults = new List<FilterResult>();
             
@@ -20,17 +26,15 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             var duration = typeof(TStorage).GetFilterResultExpirationTimeSpan();
 
             var timestamp = DateTime.Now.Ticks + duration.Ticks;
-
-            var hash = filterQuery.Hash();
-
+            
             foreach (var result in results)
             {
                 filterResults.Add(
                     new FilterResult
                     {
-                        FilterHash = hash,
                         ResultId = (long)_idLeaf.Evaluator.Read(result),
-                        ExpirationTimeStamp = timestamp
+                        ExpirationTimeStamp = timestamp,
+                        SearchId = searchId
                     });
             }
 
