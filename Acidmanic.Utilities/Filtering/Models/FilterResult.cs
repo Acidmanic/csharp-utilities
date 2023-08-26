@@ -7,9 +7,16 @@ namespace Acidmanic.Utilities.Filtering.Models
         [AutoValuedMember] [UniqueMember] public long Id { get; set; }
 
         /// <summary>
-        /// This field should be set by filter-query's hash 
+        /// This field should be set by filter-query's hash.  
         /// </summary>
         public string FilterHash { get; set; }
+
+        /// <summary>
+        /// This field holds the unique id for each specific search (filtering)
+        /// in case that client code needs to
+        /// trace filter results per search. 
+        /// </summary>
+        public string SearchId { get; set; }
 
         public long ResultId { get; set; }
 
