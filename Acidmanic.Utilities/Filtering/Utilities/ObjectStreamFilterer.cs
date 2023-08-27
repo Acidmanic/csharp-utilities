@@ -23,7 +23,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             
             var results = FilterData(data, filterQuery);
 
-            var duration = typeof(TStorage).GetFilterResultExpirationTimeSpan();
+            var duration = typeof(TStorage).GetFilterResultExpirationDurationTimeSpan();
 
             var timestamp = DateTime.Now.Ticks + duration.Ticks;
             
