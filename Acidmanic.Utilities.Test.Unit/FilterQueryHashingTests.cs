@@ -47,13 +47,16 @@ namespace Acidmanic.Utilities.Test.Unit
         }
 
 
+        private class Mani { }
+        private class Mona { }
+
         [Fact]
-        public void SimilarQueriesWithDifferentNamesMustProduceDifferentHashes()
+        public void SimilarQueriesWithDifferentTypessMustProduceDifferentHashes()
         {
             var sq1 = CreateQuery1();
-            sq1.FilterName = "ManiFilter";
+            sq1.EntityType = typeof(Mani);
             var sq2 = CreateQuery1();
-            sq1.FilterName = "MonaFilter";
+            sq1.EntityType = typeof(Mona);
             var hash1 = sq1.Hash();
 
             var hash2 = sq2.Hash();

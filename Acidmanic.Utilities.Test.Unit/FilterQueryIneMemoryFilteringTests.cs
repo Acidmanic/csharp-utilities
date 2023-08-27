@@ -71,7 +71,7 @@ namespace Acidmanic.Utilities.Test.Unit
             
             var filter = new FilterQuery();
 
-            filter.FilterName = typeof(StorageModel).FullName;
+            filter.EntityType = typeof(StorageModel);
             
             filter.Add(new FilterItem
             {
@@ -91,7 +91,7 @@ namespace Acidmanic.Utilities.Test.Unit
             
             var filter = new FilterQuery();
 
-            filter.FilterName = typeof(StorageModel).FullName;
+            filter.EntityType = typeof(StorageModel);
             
             filter.Add(new FilterItem
             {
@@ -110,7 +110,7 @@ namespace Acidmanic.Utilities.Test.Unit
             
             var filter = new FilterQuery();
 
-            filter.FilterName = typeof(StorageModel).FullName;
+            filter.EntityType = typeof(StorageModel);
             
             filter.Add(new FilterItem
             {
@@ -130,7 +130,7 @@ namespace Acidmanic.Utilities.Test.Unit
             
             var filter = new FilterQuery();
 
-            filter.FilterName = typeof(StorageModel).FullName;
+            filter.EntityType = typeof(StorageModel);
             
             filter.Add(new FilterItem
             {

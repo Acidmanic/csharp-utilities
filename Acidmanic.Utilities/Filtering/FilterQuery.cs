@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Acidmanic.Utilities.Extensions;
@@ -8,12 +9,7 @@ namespace Acidmanic.Utilities.Filtering
     {
         private readonly Dictionary<string, FilterItem> _itemsByKey = new Dictionary<string, FilterItem>();
 
-        /// <summary>
-        /// This Property is being used in hash generation, there fore you can use it to have filters with different hashes
-        /// for situations you might need to have different hashes from a same filter, like making filters distinguished
-        /// regarding the entity type.  
-        /// </summary>
-        public string FilterName { get; set; } = "Filter";
+        public Type EntityType { get; set; } = typeof(object);
 
         public void Add(FilterItem item)
         {
@@ -59,7 +55,7 @@ namespace Acidmanic.Utilities.Filtering
         {
             var sb = new StringBuilder();
 
-            sb.Append(FilterName);
+            sb.Append(EntityType.FullName);
             
             var sep = "";
 
