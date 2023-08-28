@@ -1,45 +1,25 @@
 using System;
 using System.Text.Json;
-using Acidmanic.Utilities.Results;
-using Newtonsoft.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using System.Text.Json.Serialization;
+
 
 namespace Acidmanic.Utilities.DataTypes.Meta
 {
     internal class TimeStampMsJsonConverter:JsonConverter<TimeStamp>
     {
-       
-        public override void WriteJson(JsonWriter writer, TimeStamp value, JsonSerializer serializer)
+        public override TimeStamp Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            writer.WriteValue(value.TotalMilliSeconds);
-        }
-
-        public override TimeStamp ReadJson(JsonReader reader, Type objectType, TimeStamp existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
-        {
-            var read = ReadLong(reader);
-
-            if (read)
+            if (reader.TryGetInt64(out var milliseconds))
             {
-                return read.Value;
+                return milliseconds;
             }
 
             return 0;
         }
 
-        private Result<long> ReadLong(JsonReader reader)
+        public override void Write(Utf8JsonWriter writer, TimeStamp value, JsonSerializerOptions options)
         {
-            var stringValue = reader.ReadAsString();
-
-            if (!string.IsNullOrWhiteSpace(stringValue))
-            {
-                if (long.TryParse(stringValue, out var milliseconds))
-                {
-                    return new Result<long>(true, milliseconds);
-                }
-            }
-
-            return new Result<long>().FailAndDefaultValue();
+            writer.WriteNumberValue(value.TotalMilliSeconds);
         }
     }
 }
