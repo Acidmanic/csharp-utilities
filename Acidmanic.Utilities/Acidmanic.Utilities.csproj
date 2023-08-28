@@ -10,7 +10,7 @@
         <!-- NuGet -->
         <Id>Acidmanic.Utilities</Id>
         <PackageId>Acidmanic.Utilities</PackageId>
-        <Version>1.0.11</Version>
+        <Version>1.0.12</Version>
         <Authors>Mani Moayedi</Authors>
         <Company>Acidmanic</Company>
         <PackageIcon>Graphics/icon.png</PackageIcon>
