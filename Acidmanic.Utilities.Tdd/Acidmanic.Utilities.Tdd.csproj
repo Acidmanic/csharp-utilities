@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acidmanic.Utilities.Reflections" Version="1.0.6-b06" />
+    <PackageReference Include="Acidmanic.Utilities.Reflections" Version="1.0.6-b07" />
   </ItemGroup>
 
 </Project>
