@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Acidmanic.Utilities.Extensions;
 
@@ -72,6 +73,21 @@ namespace Acidmanic.Utilities.Filtering
             }
 
             return sb.ToString().ComputeMd5();
+        }
+
+
+        public override string ToString()
+        {
+            Func<string, string> cover = s => s;
+
+            if (_itemsByKey.Count > 1)
+            {
+                cover = s => "(" + s + ")";
+            }
+
+            var itemStrings = _itemsByKey.Values.Select(i => i.ToString()).Select(cover);
+
+            return string.Join(" & ", itemStrings);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Acidmanic.Utilities.Filtering.Utilities
         private string _selectedAddress = null;
         private FieldKey _selectedKey = null;
         private AccessNode _selectedNode = null;
-        private Type _selectedNodeEffectiveType = null;
         private bool _isAnyFieldSelected = false;
 
         private FilterQuery _filter;
@@ -30,12 +29,14 @@ namespace Acidmanic.Utilities.Filtering.Utilities
 
         public void Clear()
         {
+            _filter = new FilterQuery();
+            
             _filter.EntityType = typeof(TStorage);
 
             _filter.Clear();
         }
 
-        private FilterQueryBuilder<TStorage> Where<T>(Expression<Func<TStorage, T>> selector)
+        public FilterQueryBuilder<TStorage> Where<T>(Expression<Func<TStorage, T>> selector)
         {
             //TODO: Support collections here by altering _selected values if node is collection
             //TODO: throw exception if node is not effectively a leaf
@@ -51,7 +52,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> LargerThan(string minimum)
+        public FilterQueryBuilder<TStorage> IsLargerThan(string minimum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -72,7 +73,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> SmallerThan(string maximum)
+        public FilterQueryBuilder<TStorage> IsSmallerThan(string maximum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -93,7 +94,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> Between(string minimum, string maximum)
+        public FilterQueryBuilder<TStorage> IsBetween(string minimum, string maximum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -115,7 +116,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
         
-        public FilterQueryBuilder<TStorage> EqualsTo(params string[] equals)
+        public FilterQueryBuilder<TStorage> IsEqualTo(params string[] equals)
         {
             if (!_isAnyFieldSelected)
             {

@@ -47,5 +47,22 @@ namespace Acidmanic.Utilities.Filtering
 
             return value;
         }
+
+        public override string ToString()
+        {
+            switch (ValueComparison)
+            {
+                case ValueComparison.BetweenValues:
+                    return Minimum + " > " + Key + " > " + Maximum;
+                case ValueComparison.LargerThan:
+                    return Minimum + " > " + Key;
+                case ValueComparison.SmallerThan:
+                    return Key + " > " + Maximum;
+                case ValueComparison.Equal:
+                    return  Key + " = " + string.Join(" | ",EqualValues);
+            }
+
+            return "";
+        }
     }
 }

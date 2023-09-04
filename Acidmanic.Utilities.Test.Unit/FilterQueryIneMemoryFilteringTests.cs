@@ -148,8 +148,10 @@ namespace Acidmanic.Utilities.Test.Unit
         {
             var data = CreateTestData();
 
-            var filter = CreateBetweenNumeralFilterQuery( r=>r.Age,"40","50");
+            var builder = new FilterQueryBuilder<StorageModel>();
 
+            var filter = builder.Where(p => p.Age).IsBetween("40", "50").Build();
+            
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilter(data, filter,filter.Hash());
