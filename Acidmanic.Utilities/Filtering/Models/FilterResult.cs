@@ -2,7 +2,11 @@ using Acidmanic.Utilities.Reflection.Attributes;
 
 namespace Acidmanic.Utilities.Filtering.Models
 {
-    public class FilterResult
+    /// <summary>
+    /// This entity stores the result of a search/filtering operations for another entity
+    /// </summary>
+    /// <typeparam name="TId"></typeparam>
+    public class FilterResult<TId>
     {
         [AutoValuedMember] [UniqueMember] public long Id { get; set; }
 
@@ -12,8 +16,10 @@ namespace Acidmanic.Utilities.Filtering.Models
         /// trace filter results per search. 
         /// </summary>
         public string SearchId { get; set; }
-
-        public long ResultId { get; set; }
+        /// <summary>
+        /// This filed would store the id of found entity
+        /// </summary>
+        public TId ResultId { get; set; }
 
         /// <summary>
         /// This field should be set when the filter is performed
