@@ -148,9 +148,11 @@ namespace Acidmanic.Utilities.Test.Unit
         {
             var data = CreateTestData();
 
-            var filter = CreateBetweenNumeralFilterQuery( r=>r.Age,"40","50");
+            var builder = new FilterQueryBuilder<StorageModel>();
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var filter = builder.Where(p => p.Age).IsBetween("40", "50").Build();
+            
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilter(data, filter,filter.Hash());
             
@@ -168,7 +170,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateBetweenNumeralFilterQuery(r=>r.Age,"10","80");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -183,7 +185,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateLargerThanFilterQuery( m=>m.Age, "45");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -201,7 +203,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateSmallerThanFilterQuery( m=> m.Age,"45");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -219,7 +221,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateEqualFilterQuery( m => m.Age,"41");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -236,7 +238,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateEqualFilterQuery( m => m.Age,"41","37");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -255,7 +257,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateEqualFilterQuery( m => m.Name,"Mona","Mina");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -274,7 +276,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateEqualFilterQuery( m => m.Surname,"Moayedi");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -295,7 +297,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateLargerThanFilterQuery( m => m.Name,"M");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -316,7 +318,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateSmallerThanFilterQuery( m => m.Name,"G");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             
@@ -333,7 +335,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var filter = CreateBetweenNumeralFilterQuery( m => m.Name,"Maaa","Mjjj");
 
-            var sut = new ObjectStreamFilterer<StorageModel>();
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
 
             var result = sut.PerformFilterByHash(data, filter);
             

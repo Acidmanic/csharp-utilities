@@ -7,19 +7,19 @@ using Acidmanic.Utilities.Reflection.ObjectTree;
 
 namespace Acidmanic.Utilities.Filtering.Utilities
 {
-    public class ObjectStreamFilterer<TStorage>
+    public class ObjectStreamFilterer<TStorage,TId>
     {
         private readonly AccessNode _idLeaf = TypeIdentity.FindIdentityLeaf<TStorage>();
 
 
-        public List<FilterResult> PerformFilterByHash(IEnumerable<TStorage> data, FilterQuery filterQuery)
+        public List<FilterResult<TId>> PerformFilterByHash(IEnumerable<TStorage> data, FilterQuery filterQuery)
         {
             return PerformFilter(data, filterQuery, filterQuery.Hash());
         }
 
-        public List<FilterResult> PerformFilter(IEnumerable<TStorage> data, FilterQuery filterQuery, string searchId)
+        public List<FilterResult<TId>> PerformFilter(IEnumerable<TStorage> data, FilterQuery filterQuery, string searchId)
         {
-            var filterResults = new List<FilterResult>();
+            var filterResults = new List<FilterResult<TId>>();
             
             var results = FilterData(data, filterQuery);
 
@@ -30,9 +30,9 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             foreach (var result in results)
             {
                 filterResults.Add(
-                    new FilterResult
+                    new FilterResult<TId>
                     {
-                        ResultId = (long)_idLeaf.Evaluator.Read(result),
+                        ResultId = (TId)_idLeaf.Evaluator.Read(result),
                         ExpirationTimeStamp = timestamp,
                         SearchId = searchId
                     });
