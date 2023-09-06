@@ -55,9 +55,9 @@ namespace Acidmanic.Utilities.Filtering
                 case ValueComparison.BetweenValues:
                     return Minimum + " > " + Key + " > " + Maximum;
                 case ValueComparison.LargerThan:
-                    return Minimum + " > " + Key;
+                    return Key + " > " + Minimum;
                 case ValueComparison.SmallerThan:
-                    return Key + " > " + Maximum;
+                    return Key + " < " + Maximum;
                 case ValueComparison.Equal:
                     return  Key + " = " + string.Join(" | ",EqualValues);
             }
