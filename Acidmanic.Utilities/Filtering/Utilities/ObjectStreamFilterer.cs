@@ -23,18 +23,18 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             FilterQuery filterQuery,
             string searchId)
         {
-            return PerformFilter(data, filterQuery, s => true, searchId);
+            return PerformFilter(data, filterQuery, (s,i) => true, searchId);
         }
         
         public List<FilterResult<TId>> PerformFilter(
             IEnumerable<TStorage> data, 
             FilterQuery filterQuery,
-            Func<TStorage,bool> additionalMatching,
+            Func<TStorage,TId,bool> additionalMatching,
             string searchId)
         {
             var filterResults = new List<FilterResult<TId>>();
             
-            var results = FilterData(data, filterQuery).Where(additionalMatching);
+            var results = FilterData(data, filterQuery);
 
             var duration = typeof(TStorage).GetFilterResultExpirationDurationTimeSpan();
 
@@ -42,13 +42,18 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             
             foreach (var result in results)
             {
-                filterResults.Add(
-                    new FilterResult<TId>
-                    {
-                        ResultId = (TId)_idLeaf.Evaluator.Read(result),
-                        ExpirationTimeStamp = timestamp,
-                        SearchId = searchId
-                    });
+                var resultId = (TId)_idLeaf.Evaluator.Read(result);
+
+                if (additionalMatching(result, resultId))
+                {
+                    filterResults.Add(
+                        new FilterResult<TId>
+                        {
+                            ResultId = resultId,
+                            ExpirationTimeStamp = timestamp,
+                            SearchId = searchId
+                        });   
+                }
             }
 
             return filterResults;
