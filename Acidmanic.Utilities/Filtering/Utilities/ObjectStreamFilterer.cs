@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Acidmanic.Utilities.Filtering.Extensions;
 using Acidmanic.Utilities.Filtering.Models;
 using Acidmanic.Utilities.Reflection;
@@ -17,11 +18,23 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return PerformFilter(data, filterQuery, filterQuery.Hash());
         }
 
-        public List<FilterResult<TId>> PerformFilter(IEnumerable<TStorage> data, FilterQuery filterQuery, string searchId)
+        public List<FilterResult<TId>> PerformFilter(
+            IEnumerable<TStorage> data,
+            FilterQuery filterQuery,
+            string searchId)
+        {
+            return PerformFilter(data, filterQuery, s => true, searchId);
+        }
+        
+        public List<FilterResult<TId>> PerformFilter(
+            IEnumerable<TStorage> data, 
+            FilterQuery filterQuery,
+            Func<TStorage,bool> additionalMatching,
+            string searchId)
         {
             var filterResults = new List<FilterResult<TId>>();
             
-            var results = FilterData(data, filterQuery);
+            var results = FilterData(data, filterQuery).Where(additionalMatching);
 
             var duration = typeof(TStorage).GetFilterResultExpirationDurationTimeSpan();
 
