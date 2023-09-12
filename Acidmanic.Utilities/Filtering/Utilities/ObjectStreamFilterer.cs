@@ -13,28 +13,37 @@ namespace Acidmanic.Utilities.Filtering.Utilities
         private readonly AccessNode _idLeaf = TypeIdentity.FindIdentityLeaf<TStorage>();
 
 
-        public List<FilterResult<TId>> PerformFilterByHash(IEnumerable<TStorage> data, FilterQuery filterQuery)
+        public List<FilterResult<TId>> PerformFilterByHash(
+            IEnumerable<TStorage> data, 
+            OrderTerm[] orderTerms ,
+            FilterQuery filterQuery)
         {
-            return PerformFilter(data, filterQuery, filterQuery.Hash());
+            return PerformFilter(data, filterQuery,orderTerms, filterQuery.Hash());
         }
 
         public List<FilterResult<TId>> PerformFilter(
             IEnumerable<TStorage> data,
             FilterQuery filterQuery,
+            OrderTerm[] orderTerms ,
             string searchId)
         {
-            return PerformFilter(data, filterQuery, (s,i) => true, searchId);
+            return PerformFilter(data, filterQuery, (s,i) => true,orderTerms, searchId);
         }
         
         public List<FilterResult<TId>> PerformFilter(
             IEnumerable<TStorage> data, 
             FilterQuery filterQuery,
             Func<TStorage,TId,bool> additionalMatching,
+            OrderTerm[] orderTerms,
             string searchId)
         {
             var filterResults = new List<FilterResult<TId>>();
             
-            var results = FilterData(data, filterQuery);
+            var sortedData = new List<TStorage>(data);
+            
+            sortedData.Sort(new OrderTermsComparer<TStorage>(orderTerms));
+            
+            var results = FilterData(sortedData, filterQuery);
 
             var duration = typeof(TStorage).GetFilterResultExpirationDurationTimeSpan();
 

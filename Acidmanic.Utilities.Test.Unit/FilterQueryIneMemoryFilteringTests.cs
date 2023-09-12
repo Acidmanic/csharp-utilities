@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Acidmanic.Utilities.Filtering;
 using Acidmanic.Utilities.Filtering.Attributes;
+using Acidmanic.Utilities.Filtering.Models;
 using Acidmanic.Utilities.Filtering.Utilities;
 using Acidmanic.Utilities.Reflection;
 using Acidmanic.Utilities.Reflection.Attributes;
@@ -151,10 +152,12 @@ namespace Acidmanic.Utilities.Test.Unit
             var builder = new FilterQueryBuilder<StorageModel>();
 
             var filter = builder.Where(p => p.Age).IsBetween("40", "50").Build();
+
+            var ordering = new OrderTerm[] { };
             
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilter(data, filter,filter.Hash());
+            var result = sut.PerformFilter(data, filter,ordering, filter.Hash());
             
             Assert.Equal(2,result.Count);
             
@@ -172,7 +175,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data, new OrderTerm[]{}, filter);
             
             Assert.Equal(4,result.Count);
             
@@ -187,7 +190,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -205,7 +208,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -223,7 +226,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(1,result.Count);
             
@@ -240,7 +243,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -259,7 +262,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(2,result.Count);
             
@@ -278,7 +281,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(3,result.Count);
             
@@ -299,7 +302,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data, new OrderTerm[]{},filter);
             
             Assert.Equal(3,result.Count);
             
@@ -320,7 +323,7 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(1,result.Count);
             
@@ -337,12 +340,37 @@ namespace Acidmanic.Utilities.Test.Unit
 
             var sut = new ObjectStreamFilterer<StorageModel,long>();
 
-            var result = sut.PerformFilterByHash(data, filter);
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
             
             Assert.Equal(2,result.Count);
             
             Assert.Equal(ManiId,result[0].ResultId);
             Assert.Equal(MinaId,result[1].ResultId);
+            
+        }
+        
+        [Fact]
+        public void FiltererMustBeAbleToSort()
+        {
+            var data = CreateTestData();
+
+            var filter = new FilterQuery();
+
+            var ordering = new OrderSetBuilder<StorageModel>()
+                .OrderAscendingBy(o => o.Surname)
+                .OrderDescendingBy(o => o.Age)
+                .Build();
+
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
+
+            var result = sut.PerformFilterByHash(data,ordering, filter);
+            
+            Assert.Equal(4,result.Count);
+            
+            Assert.Equal(MinaId,result[0].ResultId);
+            Assert.Equal(FarshidId,result[1].ResultId);
+            Assert.Equal(MonaId,result[2].ResultId);
+            Assert.Equal(ManiId,result[3].ResultId);
             
         }
     }
