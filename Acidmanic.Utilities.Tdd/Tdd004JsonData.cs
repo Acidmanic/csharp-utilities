@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Text;
 using Acidmanic.Utilities.DataTypes;
 using Acidmanic.Utilities.Reflection.Attributes;
+using Acidmanic.Utilities.Reflection.Extensions;
 using Acidmanic.Utilities.Reflection.ObjectTree;
 using Newtonsoft.Json;
 
@@ -53,8 +54,13 @@ namespace Acidmanic.Utilities.Tdd
             
             var reconstruct = JsonConvert.DeserializeObject<BiggerModel>(json);
 
-         
 
+            var mod = maData.Model;
+
+            var essi = mod.CastTo(typeof(string));
+
+            var dom = essi.CastTo(typeof(JsonData<Model>));
+            
         }
     }
 }

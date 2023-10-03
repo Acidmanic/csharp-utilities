@@ -133,6 +133,18 @@ namespace Acidmanic.Utilities.DataTypes
             return jsonData;
         }
 
+        public static implicit operator string(JsonData<TModel> data)
+        {
+            return data.Raw;
+        }
+
+        public static implicit operator JsonData<TModel>(string raw)
+        {
+            return new JsonData<TModel>
+            {
+                Raw = raw
+            };
+        }
 
         public TModel Value
         {
