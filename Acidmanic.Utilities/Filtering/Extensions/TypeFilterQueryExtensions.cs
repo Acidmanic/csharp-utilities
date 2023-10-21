@@ -161,7 +161,7 @@ namespace Acidmanic.Utilities.Filtering.Extensions
                 }
             }
 
-            item.EqualValues.Add(queryValue);
+            item.EqualityValues.Add(queryValue);
             item.ValueComparison = ValueComparison.Equal;
         }
     }

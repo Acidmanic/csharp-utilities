@@ -137,7 +137,7 @@ namespace Acidmanic.Utilities.Test.Unit
             {
                 Key = key,
                 ValueComparison = ValueComparison.Equal,
-                EqualValues = new List<string>(values),
+                EqualityValues = new List<string>(values),
                 ValueType = typeof(TProperty)
             });
 

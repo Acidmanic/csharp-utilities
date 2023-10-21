@@ -14,7 +14,7 @@ namespace Acidmanic.Utilities.Filtering
 
         public Type ValueType { get; set; } = typeof(string);
 
-        public List<string> EqualValues { get; set; } = new List<string>();
+        public List<string> EqualityValues { get; set; } = new List<string>();
 
         public ValueComparison ValueComparison { get; set; }
 
@@ -30,7 +30,7 @@ namespace Acidmanic.Utilities.Filtering
             var eq = "";
             var sep = "";
 
-            foreach (var value in EqualValues)
+            foreach (var value in EqualityValues)
             {
                 eq += sep + ClearForHash(value);
                 sep = ":";
@@ -59,7 +59,9 @@ namespace Acidmanic.Utilities.Filtering
                 case ValueComparison.SmallerThan:
                     return Key + " < " + Maximum;
                 case ValueComparison.Equal:
-                    return  Key + " = " + string.Join(" | ",EqualValues);
+                    return  Key + " = " + string.Join(" | ",EqualityValues);
+                case ValueComparison.NotEqual:
+                    return Key += "!=" + string.Join(" | ",EqualityValues);
             }
 
             return "";

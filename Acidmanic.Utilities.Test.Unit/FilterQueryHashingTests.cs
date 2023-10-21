@@ -72,7 +72,7 @@ namespace Acidmanic.Utilities.Test.Unit
             query.Add(new FilterItem
             {
                 Key = "Name",
-                EqualValues = new List<string> { "Mani", "Mona", "Mina", "Farshid" },
+                EqualityValues = new List<string> { "Mani", "Mona", "Mina", "Farshid" },
                 ValueComparison = ValueComparison.Equal,
                 ValueType = typeof(string)
             });
@@ -122,7 +122,7 @@ namespace Acidmanic.Utilities.Test.Unit
             query.Add(new FilterItem
             {
                 Key = "Name",
-                EqualValues = new List<string> { "Mani", "Mona", "Mina", "Farshid" },
+                EqualityValues = new List<string> { "Mani", "Mona", "Mina", "Farshid" },
                 ValueComparison = ValueComparison.Equal,
                 ValueType = typeof(string)
             });
@@ -138,7 +138,7 @@ namespace Acidmanic.Utilities.Test.Unit
             query.Add(new FilterItem
             {
                 Key = "Brand",
-                EqualValues = new List<string> { "Nokia", "Samsung", "Sony" },
+                EqualityValues = new List<string> { "Nokia", "Samsung", "Sony" },
                 ValueComparison = ValueComparison.Equal,
                 ValueType = typeof(string)
             });

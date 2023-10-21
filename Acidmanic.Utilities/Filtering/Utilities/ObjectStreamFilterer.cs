@@ -188,7 +188,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
                            Compare(value, filterQuery.Minimum, filterQuery.ValueType) >= 0;
                 case ValueComparison.Equal:
                 {
-                    foreach (var bound in filterQuery.EqualValues)
+                    foreach (var bound in filterQuery.EqualityValues)
                     {
                         if (Compare(value, bound, filterQuery.ValueType) == 0)
                         {
@@ -198,10 +198,25 @@ namespace Acidmanic.Utilities.Filtering.Utilities
 
                     return false;
                 }
+                case ValueComparison.NotEqual:
+                {
+                    foreach (var bound in filterQuery.EqualityValues)
+                    {
+                        if (Compare(value, bound, filterQuery.ValueType) == 0)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+                
                     
             }
 
             return true;
         }
     }
+    
+    
 }

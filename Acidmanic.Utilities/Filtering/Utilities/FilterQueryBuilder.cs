@@ -10,6 +10,12 @@ using Acidmanic.Utilities.Reflection.ObjectTree.FieldAddressing;
 
 namespace Acidmanic.Utilities.Filtering.Utilities
 {
+
+    public enum EqualityComparison
+    {
+        IsEqual,
+        IsNotEqual
+    }
     public class FilterQueryBuilder<TStorage>
     {
         private readonly ObjectEvaluator _evaluator;
@@ -63,7 +69,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             {
                 Key = _selectedKey.Headless().ToString(),
                 Minimum = minimum,
-                EqualValues = new List<string>(),
+                EqualityValues = new List<string>(),
                 ValueComparison = ValueComparison.LargerThan,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -84,7 +90,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             {
                 Key = _selectedKey.Headless().ToString(),
                 Maximum = maximum,
-                EqualValues = new List<string>(),
+                EqualityValues = new List<string>(),
                 ValueComparison = ValueComparison.SmallerThan,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -106,7 +112,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
                 Key = _selectedKey.Headless().ToString(),
                 Maximum = maximum,
                 Minimum = minimum,
-                EqualValues = new List<string>(),
+                EqualityValues = new List<string>(),
                 ValueComparison = ValueComparison.BetweenValues,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -116,7 +122,17 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
         
-        public FilterQueryBuilder<TStorage> IsEqualTo(params string[] equals)
+        public FilterQueryBuilder<TStorage> IsEqualTo(params string[] equalityValues)
+        {
+            return ComparesEqualityTo(EqualityComparison.IsEqual, equalityValues);
+        }
+        
+        public FilterQueryBuilder<TStorage> IsNotEqualTo(params string[] equalityValues)
+        {
+            return ComparesEqualityTo(EqualityComparison.IsNotEqual, equalityValues);
+        }
+        
+        public FilterQueryBuilder<TStorage> ComparesEqualityTo(EqualityComparison comparison,params string[] equalityValues)
         {
             if (!_isAnyFieldSelected)
             {
@@ -126,14 +142,14 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             var filterItem = new FilterItem
             {
                 Key = _selectedKey.Headless().ToString(),
-                EqualValues = new List<string>(),
-                ValueComparison = ValueComparison.Equal,
+                EqualityValues = new List<string>(),
+                ValueComparison = comparison==EqualityComparison.IsEqual?ValueComparison.Equal:ValueComparison.NotEqual,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
             
-            foreach (var equal in equals)
+            foreach (var equal in equalityValues)
             {
-                filterItem.EqualValues.Add(equal);
+                filterItem.EqualityValues.Add(equal);
             }
 
             _filter.Add(filterItem);
