@@ -143,6 +143,27 @@ namespace Acidmanic.Utilities.Test.Unit
 
             return filter;
         }
+        
+        private FilterQuery CreateNotEqualFilterQuery<TProperty>(
+            Expression<Func<StorageModel,TProperty>> selector, params string[] values)
+        {
+
+            var key = MemberOwnerUtilities.GetKey(selector).TerminalSegment().Name;
+            
+            var filter = new FilterQuery();
+
+            filter.EntityType = typeof(StorageModel);
+            
+            filter.Add(new FilterItem
+            {
+                Key = key,
+                ValueComparison = ValueComparison.NotEqual,
+                EqualityValues = new List<string>(values),
+                ValueType = typeof(TProperty)
+            });
+
+            return filter;
+        }
 
         [Fact]
         public void FiltererMustMatchMonaAndMina()
@@ -250,6 +271,25 @@ namespace Acidmanic.Utilities.Test.Unit
             Assert.Equal(ManiId,result[0].ResultId);
             
             Assert.Equal(MonaId,result[1].ResultId);
+            
+        }
+        
+        [Fact]
+        public void FiltererMustMatchNotNameEqualToMonaAndMani()
+        {
+            var data = CreateTestData();
+
+            var filter = CreateNotEqualFilterQuery( m => m.Name,"Mona","Mani");
+
+            var sut = new ObjectStreamFilterer<StorageModel,long>();
+
+            var result = sut.PerformFilterByHash(data,new OrderTerm[]{}, filter);
+            
+            Assert.Equal(2,result.Count);
+            
+            Assert.Equal(MinaId,result[0].ResultId);
+            
+            Assert.Equal(FarshidId,result[1].ResultId);
             
         }
         
