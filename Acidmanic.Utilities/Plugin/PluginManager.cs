@@ -10,13 +10,13 @@ namespace Acidmanic.Utilities.Plugin
     {
 
         private static PluginManager? _instance = null;
-        private static object _locker = new object();
+        private static readonly object Locker = new object();
 
         public static PluginManager Instance
         {
             get
             {
-                lock (_locker)
+                lock (Locker)
                 {
                     if (_instance == null)
                     {
@@ -31,7 +31,11 @@ namespace Acidmanic.Utilities.Plugin
 
         private readonly string _pluginsDirectory;
 
-        public List<Assembly> Assemblies { get; } = new List<Assembly>();
+        private readonly Dictionary<string, Assembly> _assembliesByPluginName = new Dictionary<string, Assembly>();
+        private readonly Dictionary<string, PluginLoaderAssemblyContext> _loaderContextsByPluginName = new Dictionary<string, PluginLoaderAssemblyContext>();
+        
+        public IReadOnlyDictionary<string, Assembly> PluginAssemblies => _assembliesByPluginName;
+        
 
         public PluginManager()
         {
@@ -67,33 +71,57 @@ namespace Acidmanic.Utilities.Plugin
 
         public void ScanPlugins()
         {
-            var files = Directory.GetFiles(_pluginsDirectory);
+            _assembliesByPluginName.Clear();
+            _loaderContextsByPluginName.Clear();
 
-            foreach (var file in files)
+            var directories = Directory.EnumerateDirectories(_pluginsDirectory);
+
+            foreach (var directory in directories)
             {
-                var assemblyLoaded = TryLoadingAssembly(file);
+                var pluginDirectory = new DirectoryInfo(directory);
 
-                if (assemblyLoaded)
+                var pluginNameLower = pluginDirectory.Name.ToLower();
+                
+                var files = pluginDirectory.EnumerateFiles();
+
+                foreach (var file in files)
                 {
-                    Assemblies.Add(assemblyLoaded);
+                    if (file.Name.ToLower() == pluginNameLower)
+                    {
+                        var assemblyLoaded = TryLoadingAssembly(file.FullName);
+
+                        if (assemblyLoaded)
+                        {
+                            _assembliesByPluginName.Add(pluginNameLower,assemblyLoaded.Primary);
+                            _loaderContextsByPluginName.Add(pluginNameLower,assemblyLoaded.Secondary);
+                        }
+                    }
                 }
             }
+            
         }
 
-        private Result<Assembly> TryLoadingAssembly(string file)
+        private Result<Assembly,PluginLoaderAssemblyContext> TryLoadingAssembly(string file)
         {
             try
             {
-                var loaded = Assembly.LoadFile(file);
+                
+                var context = new PluginLoaderAssemblyContext(file);
 
-                if (loaded != null)
+                var assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(file));
+
+                var assembly = context.LoadFromAssemblyName(assemblyName);
+
+                if (assembly != null)
                 {
-                    return new Result<Assembly>(true, loaded);
+
+                    return new Result<Assembly, PluginLoaderAssemblyContext>
+                        (true, context, assembly);
                 }
             }
             catch (Exception _) { /**/ }
 
-            return new Result<Assembly>().FailAndDefaultValue();
+            return new Result<Assembly,PluginLoaderAssemblyContext>().FailAndDefaultBothValues();
         }
     }
 }

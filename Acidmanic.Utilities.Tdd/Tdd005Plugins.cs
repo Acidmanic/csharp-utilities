@@ -41,7 +41,7 @@ namespace Acidmanic.Utilities.Tdd
 
             public ServiceFactory() : base(FactoryMatching.MatchByInstance)
             {
-                var plugins = PluginManager.Instance.Assemblies;
+                var plugins = PluginManager.Instance.PluginAssemblies.Values;
 
                 foreach (var plugin in plugins)
                 {

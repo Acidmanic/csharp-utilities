@@ -1,4 +1,5 @@
 ﻿using Sample.Contract;
+using Sample.Dependency;
 
 namespace Sample.Plugin;
 public class ServiceUseCaseImplementation:IService
@@ -11,7 +12,7 @@ public class ServiceUseCaseImplementation:IService
         {
             Very = "This is",
             Important = "Very Important",
-            Data = "Provided use-case data"
+            Data = new TextUpperCaseService().ToUpper("Provided use-case data")
         };
     }
 }
