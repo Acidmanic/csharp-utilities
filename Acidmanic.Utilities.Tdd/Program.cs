@@ -6,7 +6,7 @@ namespace Acidmanic.Utilities.Tdd
     {
         static void Main(string[] args)
         {
-            new Tdd004JsonData().Main();
+            new Tdd005Plugins().Main();
         }
     }
 }

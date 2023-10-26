@@ -3,6 +3,8 @@
 namespace Sample.Plugin;
 public class ServiceUseCaseImplementation:IService
 {
+    public string Name => "UseCase-1";
+
     public Model ProvideVeryImportantData()
     {
         return new Model

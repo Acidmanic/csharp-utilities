@@ -45,6 +45,11 @@ namespace Acidmanic.Utilities.Plugin
         {
             var assemblyLocation = Assembly.GetEntryAssembly()?.Location;
 
+            if (!string.IsNullOrEmpty(assemblyLocation))
+            {
+                assemblyLocation = new DirectoryInfo(assemblyLocation)?.Parent?.FullName;
+            }
+
             var assemblyDirectory = assemblyLocation ?? ".";
 
             assemblyDirectory = new DirectoryInfo(assemblyDirectory).FullName;
