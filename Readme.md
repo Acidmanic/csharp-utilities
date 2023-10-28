@@ -152,3 +152,44 @@ extension methods: ```string.CompressAsync(string,Compression,[CompressionLevel]
 and returns the compressed data as base64 string. And the DeCompress method does exactly 
 the opposite.
 
+
+
+Plugins
+--------
+
+Dotnet application can have plugins by loading other assembly files in the application and 
+using reflection to create instances from types.
+
+in this package there is a class named ```PluginManager```, which is a singleton, and will 
+provide such functionality easily. For this, first plugin manager needs to find the location to 
+your compiled additional code's binaries. Then it need to know which one is the main assembly
+(therefore the others would be dependencies). For minimizing the complexity, Plugin-manager class
+ does its task obeying a simple convention:
+
+* A plugin is a collection of binaries inside a directory
+* This directory's name must be exactly (including .dll) the same as the dependency file. (case in-sensitive)
+* Plugin-manager would look up the directory __Plugins__, to find plugin directories
+
+For example consider you wrote a service that you want to export as a plugin. After building your 
+ code, it will give you Your.Service.dll file. Then in your client application, which is using the 
+plugin-manager class to get to your service, you would have to create the following directory structure:
+
+```
+<dir>   |-Plugins
+<dir>   |---------|your.service.dll
+<file>  |--------------------------|Your.Service.dll
+```
+
+And if your service, depends on for example NewtonSoft.Json.dll and Some.Other.Dependency.dll,
+ you will also put all of those files beside your own service file:
+
+```
+<dir>   |-Plugins
+<dir>   |---------|your.service.dll
+<file>  |--------------------------|Your.Service.dll
+<file>  |--------------------------|NewtonSoft.Json.dll
+<file>  |--------------------------|Some.Other.Dependency.dll
+```
+
+
+

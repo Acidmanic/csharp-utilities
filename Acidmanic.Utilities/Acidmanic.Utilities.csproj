@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+<!--        <TargetFramework>netstandard2.1</TargetFramework>-->
+        <TargetFramework>net7.0</TargetFramework>
         
     </PropertyGroup>
     
@@ -10,7 +11,7 @@
         <!-- NuGet -->
         <Id>Acidmanic.Utilities</Id>
         <PackageId>Acidmanic.Utilities</PackageId>
-        <Version>1.0.21</Version>
+        <Version>1.0.22-b01</Version>
         <Authors>Mani Moayedi</Authors>
         <Company>Acidmanic</Company>
         <PackageIcon>Graphics/icon.png</PackageIcon>
