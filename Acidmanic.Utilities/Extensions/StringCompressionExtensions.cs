@@ -72,9 +72,9 @@ namespace Acidmanic.Utilities.Extensions
 
                 await decompressStream.CopyToAsync(outStream);
 
-                outStream.Flush();
+                await decompressStream.FlushAsync();
 
-                data = outStream.GetBuffer();
+                data = outStream.ToArray();
 
                 var reConstructed = Encoding.Unicode.GetString(data);
 

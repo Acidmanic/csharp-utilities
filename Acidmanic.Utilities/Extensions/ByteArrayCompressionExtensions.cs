@@ -18,9 +18,9 @@ public static class ByteArrayCompressionExtensions
         using var compressionStream = outStream.GetCompressionStream
             (compression, CompressionMode.Compress, level);
 
-        sourceStream.CopyToAsync(compressionStream);
+        sourceStream.CopyTo(compressionStream);
 
-        compressionStream.FlushAsync();
+        compressionStream.Flush();
 
         data = outStream.ToArray();
 
@@ -38,11 +38,11 @@ public static class ByteArrayCompressionExtensions
             using var decompressStream = sourceStream.GetCompressionStream
                 (compression, CompressionMode.Decompress, CompressionLevel.NoCompression);
 
-            decompressStream.CopyToAsync(outStream);
+            decompressStream.CopyTo(outStream);
 
-            outStream.Flush();
+            decompressStream.Flush();
 
-            data = outStream.GetBuffer();
+            data = outStream.ToArray();
         }
 
         return data;

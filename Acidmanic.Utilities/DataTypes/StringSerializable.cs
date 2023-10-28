@@ -61,8 +61,6 @@ public abstract class StringSerializable
                         return null;
                     }
                 }
-
-                bytes = ms.ToArray();
             }
         }
         return new object();

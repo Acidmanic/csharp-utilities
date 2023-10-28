@@ -6,7 +6,7 @@ namespace Acidmanic.Utilities.Tdd
     {
         static void Main(string[] args)
         {
-            new Tdd005Plugins().Main();
+            new Tdd006StringSerializable().Main();
         }
     }
 }
