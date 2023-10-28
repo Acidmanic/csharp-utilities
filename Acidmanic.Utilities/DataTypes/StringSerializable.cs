@@ -2,11 +2,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Acidmanic.Utilities.Extensions;
+using Acidmanic.Utilities.Reflection.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 
 namespace Acidmanic.Utilities.DataTypes;
 
+[AlteredType(typeof(string))]
 public abstract class StringSerializable
 {
 
@@ -46,7 +48,7 @@ public abstract class StringSerializable
 
             bytes = bytes.Decompress();
 
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream(bytes))
             {
                 using (BsonDataReader reader = new BsonDataReader(ms))
                 {
@@ -58,7 +60,7 @@ public abstract class StringSerializable
 
                     if (model != null)
                     {
-                        return null;
+                        return model;
                     }
                 }
             }
@@ -70,8 +72,10 @@ public abstract class StringSerializable
 
     protected abstract Type? GetModelType();
 
-    public string StringValue { get; protected set; } = EmptyObjectRaw;
+    public string StringValue { get;  set; } = EmptyObjectRaw;
     
+    [JsonIgnore] 
+    [System.Text.Json.Serialization.JsonIgnore]
     public object? ModelObject
     {
         get => Deserialize(StringValue, GetModelType());
@@ -81,11 +85,13 @@ public abstract class StringSerializable
 
 
 
-
+[AlteredType(typeof(string))]
 public class StringSerializable<TModel> : StringSerializable where TModel : class
 {
     
     
+    [JsonIgnore] 
+    [System.Text.Json.Serialization.JsonIgnore] 
     public TModel? Model { 
         get => ModelObject as TModel;
         set => ModelObject = value;

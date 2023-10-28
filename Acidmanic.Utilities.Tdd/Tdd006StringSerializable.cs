@@ -26,7 +26,7 @@ namespace Acidmanic.Utilities.Tdd
         class BiggerModel
         {
             [TreatAsLeaf]
-            public JsonData<Model> Model { get; set; }
+            public StringSerializable<Model> Model { get; set; }
             
             public string Surname { get; set; }
         }
@@ -50,6 +50,8 @@ namespace Acidmanic.Utilities.Tdd
 
             var reBytes = compressedBytes.Decompress();
 
+            // test 2 pass: byte compression 
+            
             var smallData = new Model
             {
                 Id = 12,
@@ -71,6 +73,29 @@ namespace Acidmanic.Utilities.Tdd
             StringSerializable<Model> reSerialized = stringValue;
 
             Model model = reSerialized;
+            
+            // test 3 pass: implicit conversion
+            
+            var json = JsonConvert.SerializeObject(maData);
+
+            var reconstruct = JsonConvert.DeserializeObject<BiggerModel>(json);
+
+            var mod = reconstruct.Model;
+            
+
+            // test 4 pass: json reconstruction
+
+
+            var ev = new ObjectEvaluator(maData);
+
+            var flatten = ev.ToStandardFlatData(o=> o.FullTree().UseAlternativeTypes());
+
+            var evByType = new ObjectEvaluator(typeof(BiggerModel));
+            
+            evByType.LoadStandardData(flatten);
+
+            var reWritten = evByType.RootObject as BiggerModel;
+
             
             
         }

@@ -54,7 +54,7 @@ namespace Acidmanic.Utilities.Tdd
             
             var reconstruct = JsonConvert.DeserializeObject<BiggerModel>(json);
 
-
+ 
             var mod = maData.Model;
 
             var essi = mod.CastTo(typeof(string));
