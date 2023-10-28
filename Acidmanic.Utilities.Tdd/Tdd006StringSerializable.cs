@@ -8,6 +8,7 @@ using Acidmanic.Utilities.Reflection.Attributes;
 using Acidmanic.Utilities.Reflection.Extensions;
 using Acidmanic.Utilities.Reflection.ObjectTree;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Acidmanic.Utilities.Tdd
 {
@@ -109,10 +110,15 @@ namespace Acidmanic.Utilities.Tdd
 
             StringSerializableData data = (string)maData.Model;
 
-            var fromString = StringSerializable<ModelDuplicate>.From(data).Model;
+            var duplicate = StringSerializable<ModelDuplicate>.From(data).Model;
             
             
+            //
 
+            var asObject = StringSerializableObject.From(data).ModelObject as JObject;
+
+            
+            
         }
     }
 }
