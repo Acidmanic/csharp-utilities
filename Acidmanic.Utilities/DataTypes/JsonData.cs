@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace Acidmanic.Utilities.DataTypes
 {
+    [Obsolete("Due to storing type data, This implementation will raise some casting issues with different versions of same type, Use StringSerializable Types instead.")]
     [AlteredType(typeof(string))]
     public class JsonData
     {
@@ -113,6 +114,7 @@ namespace Acidmanic.Utilities.DataTypes
         }
     }
 
+    [Obsolete("Due to storing type data, This implementation will raise some casting issues with different versions of same type, Use StringSerializable Types instead.")]
     public class JsonData<TModel> : JsonData where TModel : class
     {
         public static implicit operator TModel(JsonData<TModel> data)
