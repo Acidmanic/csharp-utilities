@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Acidmanic.Utilities.Extensions;
 using Acidmanic.Utilities.Reflection.Attributes;
 using Newtonsoft.Json;
 
