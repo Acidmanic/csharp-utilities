@@ -9,9 +9,31 @@ using Newtonsoft.Json.Bson;
 namespace Acidmanic.Utilities.DataTypes;
 
 [AlteredType(typeof(string))]
-public abstract class StringSerializable
+public class StringSerializableData
 {
+   public string StringValue { get;  set; }
+   
+   public static implicit operator string(StringSerializableData serializable)
+   {
+       return serializable.StringValue;
+   }
 
+   public static implicit operator StringSerializableData(string value)
+   {
+       var serializable = new StringSerializableData
+       {
+           StringValue = value
+       };
+
+       return serializable;
+   }
+}
+
+[AlteredType(typeof(string))]
+public abstract class StringSerializable:StringSerializableData
+{
+    protected static readonly string EmptyObjectRaw = Serialize(new object());
+    
     private static string Serialize(object model)
     {
         if (model == null)
@@ -68,11 +90,11 @@ public abstract class StringSerializable
         return new object();
     }
 
-    private static readonly string EmptyObjectRaw = Serialize(new object()); 
+     
 
     protected abstract Type? GetModelType();
 
-    public string StringValue { get;  set; } = EmptyObjectRaw;
+    
     
     [JsonIgnore] 
     [System.Text.Json.Serialization.JsonIgnore]
@@ -130,6 +152,19 @@ public class StringSerializable<TModel> : StringSerializable where TModel : clas
 
         return serializable;
     }
-    
+
+    public static StringSerializable<TModel> From(StringSerializableData data)
+    {
+        return new StringSerializable<TModel>
+        {
+            StringValue = data.StringValue
+        };
+    }
+}
+
+
+[AlteredType(typeof(string))]
+public class StringSerializableObject : StringSerializableData
+{
     
 }

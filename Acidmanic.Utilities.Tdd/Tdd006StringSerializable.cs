@@ -22,6 +22,14 @@ namespace Acidmanic.Utilities.Tdd
             public string Name { get; set; }
             
         }
+        
+        class ModelDuplicate
+        {
+            public long Id { get; set; }
+            
+            public string Name { get; set; }
+            
+        }
 
         class BiggerModel
         {
@@ -97,7 +105,14 @@ namespace Acidmanic.Utilities.Tdd
             var reWritten = evByType.RootObject as BiggerModel;
 
             
+            // test 5 pass: reconstruct by object evaluators
+
+            StringSerializableData data = (string)maData.Model;
+
+            var fromString = StringSerializable<ModelDuplicate>.From(data).Model;
             
+            
+
         }
     }
 }
