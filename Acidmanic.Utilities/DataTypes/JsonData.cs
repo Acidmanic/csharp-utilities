@@ -77,14 +77,14 @@ namespace Acidmanic.Utilities.DataTypes
 
             var json = JsonConvert.SerializeObject(wrap);
 
-            var compressed = json.CompressAsync(Compressions.GZip).Result;
+            var compressed = json.CompressB64Async(Compressions.GZip).Result;
 
             return compressed;
         }
 
         protected static object Deserialize(string compressedJson)
         {
-            var json = compressedJson.DecompressAsync(Compressions.GZip).Result;
+            var json = compressedJson.DecompressB64Async(Compressions.GZip).Result;
 
             var wrap = JsonConvert.DeserializeObject<JsonDataHeader>(json);
 
