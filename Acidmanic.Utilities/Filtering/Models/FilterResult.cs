@@ -19,11 +19,17 @@ namespace Acidmanic.Utilities.Filtering.Models
         /// <summary>
         /// This filed would store the id of found entity
         /// </summary>
-        public TId ResultId { get; set; }
+        public virtual TId ResultId { get; set; }
 
         /// <summary>
         /// This field should be set when the filter is performed
         /// </summary>
         public long ExpirationTimeStamp { get; set; }
+    }
+
+    internal class FilterResultForceLeafId<TId> : FilterResult<TId>
+    {
+        [TreatAsLeaf]
+        public override TId ResultId { get; set; }
     }
 }

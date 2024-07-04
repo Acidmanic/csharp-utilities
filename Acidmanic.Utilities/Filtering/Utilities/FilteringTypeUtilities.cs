@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using Acidmanic.Utilities.Filtering.Models;
 using Acidmanic.Utilities.Reflection;
+using Acidmanic.Utilities.Reflection.Attributes;
 
 namespace Acidmanic.Utilities.Filtering.Utilities
 {
@@ -8,15 +10,24 @@ namespace Acidmanic.Utilities.Filtering.Utilities
     {
         public static Type GetFilterResultsType(Type entityType)
         {
-            return MakeSpecifiedTypeForGenericIdType(typeof(FilterResult<>), entityType);
+            return MakeSpecifiedTypeForGenericIdType(
+                typeof(FilterResult<>),
+                typeof(FilterResultForceLeafId<>),
+                entityType);
         }
 
         public static Type GetSearchIndexType(Type entityType)
         {
-            return MakeSpecifiedTypeForGenericIdType(typeof(SearchIndex<>), entityType);
+            return MakeSpecifiedTypeForGenericIdType(
+                typeof(SearchIndex<>),
+                typeof(SearchIndexForceLeafId<>),
+                entityType);
         }
 
-        private static Type MakeSpecifiedTypeForGenericIdType(Type idGenericType, Type entityType)
+        private static Type MakeSpecifiedTypeForGenericIdType(
+            Type idGenericType,
+            Type idGenericForceLeafType,
+            Type entityType)
         {
             var idLeaf = TypeIdentity.FindIdentityLeaf(entityType);
 
@@ -28,7 +39,12 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             }
 
             var genericType = idGenericType;
-
+            
+            if (idLeaf.PropertyAttributes.Any(a => a is TreatAsLeafAttribute))
+            {
+                genericType = idGenericForceLeafType;
+            }
+            
             var specifiedType = genericType.MakeGenericType(idLeaf.Type);
 
             return specifiedType;

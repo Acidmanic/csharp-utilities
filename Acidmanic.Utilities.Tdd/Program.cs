@@ -6,7 +6,7 @@ namespace Acidmanic.Utilities.Tdd
     {
         static void Main(string[] args)
         {
-            new Tdd006StringSerializable().Main();
+            new Tdd007FilterResultsType().Main();
         }
     }
 }

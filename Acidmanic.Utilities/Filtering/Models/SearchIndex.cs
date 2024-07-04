@@ -8,10 +8,14 @@ namespace Acidmanic.Utilities.Filtering.Models
         
         [AutoValuedMember] [UniqueMember] public long Id { get; set; }
 
-        public TId ResultId { get; set; }
+        public virtual TId ResultId { get; set; }
 
         public string IndexCorpus { get; set; }
+    }
 
-
+    internal class SearchIndexForceLeafId<TId> : SearchIndex<TId>
+    {
+        [TreatAsLeaf]
+        public override TId ResultId { get; set; }
     }
 }
