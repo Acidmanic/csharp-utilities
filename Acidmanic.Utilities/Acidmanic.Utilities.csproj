@@ -11,7 +11,7 @@
         <!-- NuGet -->
         <Id>Acidmanic.Utilities</Id>
         <PackageId>Acidmanic.Utilities</PackageId>
-        <Version>1.0.22-b04</Version>
+        <Version>1.0.22-b05</Version>
         <Authors>Mani Moayedi</Authors>
         <Company>Acidmanic</Company>
         <PackageIcon>Graphics/icon.png</PackageIcon>
@@ -46,7 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Acidmanic.Utilities.Reflections" Version="1.0.6-b14" />
+      <PackageReference Include="Acidmanic.Utilities.Reflections" Version="1.0.6-b15" />
       <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3-beta1" />
       <PackageReference Include="System.Text.Json" Version="8.0.0-preview.7.23375.6" />
     </ItemGroup>
