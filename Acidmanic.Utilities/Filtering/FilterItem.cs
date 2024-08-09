@@ -8,13 +8,13 @@ namespace Acidmanic.Utilities.Filtering
         private static readonly string[] OutOfHashStrings = { ":" };
         public string Key { get; set; }
 
-        public string Maximum { get; set; }
+        public object Maximum { get; set; }
 
-        public string Minimum { get; set; }
+        public object Minimum { get; set; }
 
         public Type ValueType { get; set; } = typeof(string);
 
-        public List<string> EqualityValues { get; set; } = new List<string>();
+        public List<object> EqualityValues { get; set; } = new List<object>();
 
         public ValueComparison ValueComparison { get; set; }
 
@@ -41,11 +41,13 @@ namespace Acidmanic.Utilities.Filtering
             return hash;
         }
 
-        private string ClearForHash(string value)
+        private string ClearForHash(object value)
         {
-            value = value?.ToLower() ?? "";
+            var v = value?.ToString() ?? "";
+            
+            v = v.ToLower() ?? "";
 
-            return value;
+            return v;
         }
 
         public override string ToString()

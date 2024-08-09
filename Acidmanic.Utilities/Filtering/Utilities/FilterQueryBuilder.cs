@@ -58,7 +58,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> IsLargerThan(string minimum)
+        public FilterQueryBuilder<TStorage> IsLargerThan(object minimum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -69,7 +69,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             {
                 Key = _selectedKey.Headless().ToString(),
                 Minimum = minimum,
-                EqualityValues = new List<string>(),
+                EqualityValues = new List<object>(),
                 ValueComparison = ValueComparison.LargerThan,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -79,7 +79,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> IsSmallerThan(string maximum)
+        public FilterQueryBuilder<TStorage> IsSmallerThan(object maximum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -90,7 +90,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             {
                 Key = _selectedKey.Headless().ToString(),
                 Maximum = maximum,
-                EqualityValues = new List<string>(),
+                EqualityValues = new List<object>(),
                 ValueComparison = ValueComparison.SmallerThan,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -100,7 +100,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
 
-        public FilterQueryBuilder<TStorage> IsBetween(string minimum, string maximum)
+        public FilterQueryBuilder<TStorage> IsBetween(object minimum, object maximum)
         {
             if (!_isAnyFieldSelected)
             {
@@ -112,7 +112,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
                 Key = _selectedKey.Headless().ToString(),
                 Maximum = maximum,
                 Minimum = minimum,
-                EqualityValues = new List<string>(),
+                EqualityValues = new List<object>(),
                 ValueComparison = ValueComparison.BetweenValues,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };
@@ -122,17 +122,17 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return this;
         }
         
-        public FilterQueryBuilder<TStorage> IsEqualTo(params string[] equalityValues)
+        public FilterQueryBuilder<TStorage> IsEqualTo(params object[] equalityValues)
         {
             return ComparesEqualityTo(EqualityComparison.IsEqual, equalityValues);
         }
         
-        public FilterQueryBuilder<TStorage> IsNotEqualTo(params string[] equalityValues)
+        public FilterQueryBuilder<TStorage> IsNotEqualTo(params object[] equalityValues)
         {
             return ComparesEqualityTo(EqualityComparison.IsNotEqual, equalityValues);
         }
         
-        public FilterQueryBuilder<TStorage> ComparesEqualityTo(EqualityComparison comparison,params string[] equalityValues)
+        public FilterQueryBuilder<TStorage> ComparesEqualityTo(EqualityComparison comparison,params object[] equalityValues)
         {
             if (!_isAnyFieldSelected)
             {
@@ -142,7 +142,7 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             var filterItem = new FilterItem
             {
                 Key = _selectedKey.Headless().ToString(),
-                EqualityValues = new List<string>(),
+                EqualityValues = new List<object>(),
                 ValueComparison = comparison==EqualityComparison.IsEqual?ValueComparison.Equal:ValueComparison.NotEqual,
                 ValueType = _selectedNode.Type.GetAlteredOrOriginal()
             };

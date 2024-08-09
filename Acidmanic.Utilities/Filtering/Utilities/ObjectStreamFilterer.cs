@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acidmanic.Utilities.Filtering.Extensions;
 using Acidmanic.Utilities.Filtering.Models;
 using Acidmanic.Utilities.Reflection;
+using Acidmanic.Utilities.Reflection.Extensions;
 using Acidmanic.Utilities.Reflection.ObjectTree;
 
 namespace Acidmanic.Utilities.Filtering.Utilities
@@ -135,18 +135,28 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return true;
         }
 
-        private int CompareAsStrings(object value, string bound)
+        private int CompareAsStrings(object value, object bound)
         {
             var stringValue = value as string;
 
-            return String.Compare(stringValue, bound, StringComparison.Ordinal);
-        }
-        
-        private int CompareAsNumbers(object value, string bound)
-        {
-            var doubleValue = double.Parse(value.ToString());
+            var stringBond = bound as string;
 
-            var doubleBound = double.Parse(bound);
+            return string.Compare(stringValue, stringBond, StringComparison.Ordinal);
+        }
+
+
+        private int CompareAsNumbers(object value, object bound)
+        {
+            // var doubleValue = double.Parse($"{value}");
+            //
+            // var doubleBound = double.Parse($"{bound}");
+            
+            var doubleValue = value?.AsNumber();
+            var doubleBound = bound?.AsNumber();
+            
+            if (doubleValue is null && doubleBound is null) return 0;
+            if (doubleValue is null) return -1;
+            if (doubleBound is null) return 1;
 
             var diff =  doubleValue - doubleBound;
 
@@ -165,8 +175,9 @@ namespace Acidmanic.Utilities.Filtering.Utilities
             return 0;
         }
         
-        private int Compare(object value, string bound, Type type)
+        private int Compare(object value, object bound, Type type)
         {
+            
             if (TypeCheck.IsNumerical(type))
             {
                 return CompareAsNumbers(value, bound);
