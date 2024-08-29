@@ -12,22 +12,24 @@ namespace Acidmanic.Utilities.Extensions
         GZip = 0,
         Brotli = 1
     }
-    
+
     public static class StringCompressionExtensions
     {
-        
         /// <summary>
         /// Based of selected Compression type, compresses the input string and returns a base64 string in result.
         /// </summary>
         /// <param name="value">string to be compressed</param>
         /// <param name="compression">Specifies the compression algorithm or if the string must be compressed at all.</param>
         /// <param name="level">Compression level (Vs Performance)</param>
+        /// <param name="encoding">Will be used to encode value (string) to bytes before being compressed (default: Unicode) </param>
         /// <returns>Compressed data as bytes.</returns>
-        public static async Task<byte[]> CompressAsync(this string value, Compressions compression,
-            CompressionLevel level = CompressionLevel.Fastest)
+        public static async Task<byte[]> CompressAsync(this string value,
+            Compressions compression,
+            CompressionLevel level = CompressionLevel.Fastest,
+            Encoding? encoding = null)
         {
-            var data = Encoding.Unicode.GetBytes(value);
-                
+            var data = (encoding ?? Encoding.Unicode).GetBytes(value);
+
             if (compression == Compressions.GZip || compression == Compressions.Brotli)
             {
                 using var sourceStream = new MemoryStream(data);
@@ -42,46 +44,48 @@ namespace Acidmanic.Utilities.Extensions
                 await compressionStream.FlushAsync();
 
                 data = outStream.ToArray();
-                
+
                 return data;
             }
 
             return data;
         }
-        
-        
+
+
         /// <summary>
         /// Based of selected Compression type, compresses the input string and returns a base64 string in result.
         /// </summary>
         /// <param name="value">string to be compressed</param>
         /// <param name="compression">Specifies the compression algorithm or if the string must be compressed at all.</param>
         /// <param name="level">Compression level (Vs Performance)</param>
+        /// <param name="encoding">Will be used to encode value (string) to bytes before being compressed (default: Unicode) </param>
         /// <returns>Compressed string data in base64 format.</returns>
         public static async Task<string> CompressB64Async(this string value, Compressions compression,
-            CompressionLevel level = CompressionLevel.Fastest)
+            CompressionLevel level = CompressionLevel.Fastest,
+            Encoding? encoding = null)
         {
             if (compression == Compressions.None) return value;
 
-            var data = await CompressAsync(value, compression, level);
-            
+            var data = await CompressAsync(value, compression, level, encoding);
+
             var converted = Convert.ToBase64String(data);
 
             return converted;
         }
-        
+
         /// <summary>
         /// Takes a base64 string format as input data which is considered to be the result of a compression on a
         /// string data. Returns the de compressed result as string. 
         /// </summary>
         /// <param name="data">input byte[] representing the compressed data</param>
         /// <param name="compression">Specifies the compression algorithm or if the string is compressed at all.</param>
+        /// <param name="encoding">Will be used to decode decompressed bytes into string (default: Unicode) </param>
         /// <returns>DeCompressed string data as string.</returns>
-        public static async Task<string> DecompressAsync(this byte[] data, Compressions compression)
+        public static async Task<string> DecompressAsync(this byte[] data, Compressions compression,
+            Encoding? encoding = null)
         {
-            
             if (compression == Compressions.Brotli || compression == Compressions.GZip)
             {
-
                 using var sourceStream = new MemoryStream(data);
 
                 using var outStream = new MemoryStream();
@@ -95,30 +99,30 @@ namespace Acidmanic.Utilities.Extensions
 
                 data = outStream.ToArray();
             }
-            
-            var reConstructed = Encoding.Unicode.GetString(data);
+
+            var reConstructed = (encoding ?? Encoding.Unicode).GetString(data);
 
             return reConstructed;
         }
-        
+
         /// <summary>
         /// Takes a base64 string format as input data which is considered to be the result of a compression on a
         /// string data. Returns the de compressed result as string. 
         /// </summary>
         /// <param name="value">base64 string representing the compressed data</param>
         /// <param name="compression">Specifies the compression algorithm or if the string is compressed at all.</param>
+        /// <param name="encoding">Will be used to decode decompressed bytes into string (default: Unicode) </param>
         /// <returns>DeCompressed string data as string.</returns>
-        public static async Task<string> DecompressB64Async(this string value, Compressions compression)
+        public static async Task<string> DecompressB64Async(this string value, Compressions compression,
+            Encoding? encoding = null)
         {
-
             if (compression == Compressions.None) return value;
-            
-                var data = Convert.FromBase64String(value);
 
-                var reConstructed = await DecompressAsync(data, compression);
+            var data = Convert.FromBase64String(value);
 
-                return reConstructed;
-            
+            var reConstructed = await DecompressAsync(data, compression, encoding);
+
+            return reConstructed;
         }
     }
 }
